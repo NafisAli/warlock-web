@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using WarlockMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WarlockMVC.Data
 {
@@ -8,5 +9,7 @@ namespace WarlockMVC.Data
         {
             
         }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }
