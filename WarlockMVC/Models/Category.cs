@@ -8,6 +8,6 @@ namespace WarlockMVC.Models
         public int Id { get; set; }
         [Required]
         public required string Name { get; set; }
-        public required string DisplayOrder { get; set; }
+        public required int DisplayOrder { get; set; }
     }
 }
