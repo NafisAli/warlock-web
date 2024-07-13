@@ -1,9 +1,13 @@
-﻿namespace WarlockMVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WarlockMVC.Models
 {
     public class Category
     {
+        [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string DisplayOrder { get; set; }
+        [Required]
+        public required string Name { get; set; }
+        public required string DisplayOrder { get; set; }
     }
 }
