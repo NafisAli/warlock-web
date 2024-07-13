@@ -22,6 +22,10 @@ namespace WarlockMVC_Razor.Pages.Categories
 
         public IActionResult OnPost()
         {
+            if (Category.Name == Category.DisplayOrder.ToString()) ModelState.AddModelError("Category.Name", "The Display Order cannot exactly match the name");
+
+            if (!ModelState.IsValid) return Page();
+
             _db.Categories.Add(Category);
             _db.SaveChanges();
 
