@@ -4,7 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>21847039-f17c-4007-9ccf-fee851afa4c2</UserSecretsId>
+    <RootNamespace>WarlockMVC_Razor</RootNamespace>
+    <UserSecretsId>6fc91732-5a74-4b19-946c-b2c7fbaa6160</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
