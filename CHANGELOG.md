@@ -22,6 +22,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.3.0 (2024-07-16)
+
+### New
+
+- Warlock MVC. Implement Areas. by @NafisAli
+- Warlock MVC. Add dropdown menu to navigation. by @NafisAli
+
+---
+
 ## 1.2.0 (2024-07-16)
 
 ### New
