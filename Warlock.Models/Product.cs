@@ -16,7 +16,7 @@ namespace Warlock.Models
         public required string Title { get; set; }
         public string? Description { get; set; }
         [Required]
-        public required string Level { get; set; }
+        public required int Level { get; set; }
         [Required]
         public required string Tier { get; set; }
         [Required]
