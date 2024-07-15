@@ -7,16 +7,16 @@ namespace WarlockMVC.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ICategoryRepository db)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryRepository = db;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _categoryRepository.GetAll().ToList();
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
 
             return View(objCategoryList);
         }
@@ -33,8 +33,8 @@ namespace WarlockMVC.Controllers
 
             if (!ModelState.IsValid) return View();
 
-            _categoryRepository.Add(obj);
-            _categoryRepository.Save();
+            _unitOfWork.Category.Add(obj);
+            _unitOfWork.Save();
 
             TempData["success"] = "Category created successfully";
 
@@ -45,7 +45,7 @@ namespace WarlockMVC.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            Category? categoryObj = _categoryRepository.Get(x => x.Id == id);
+            Category? categoryObj = _unitOfWork.Category.Get(x => x.Id == id);
             if (categoryObj == null) return NotFound();
 
             return View(categoryObj);
@@ -58,8 +58,8 @@ namespace WarlockMVC.Controllers
 
             if (!ModelState.IsValid) return View();
 
-            _categoryRepository.Update(obj);
-            _categoryRepository.Save();
+            _unitOfWork.Category.Update(obj);
+            _unitOfWork.Save();
 
             TempData["success"] = "Category updated successfully";
 
@@ -70,7 +70,7 @@ namespace WarlockMVC.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            Category? categoryObj = _categoryRepository.Get(x => x.Id == id);
+            Category? categoryObj = _unitOfWork.Category.Get(x => x.Id == id);
             if (categoryObj == null) return NotFound();
 
             return View(categoryObj);
@@ -79,12 +79,12 @@ namespace WarlockMVC.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? categoryObj = _categoryRepository.Get(x => x.Id == id);
+            Category? categoryObj = _unitOfWork.Category.Get(x => x.Id == id);
 
             if (categoryObj == null) return NotFound();
 
-            _categoryRepository.Delete(categoryObj);
-            _categoryRepository.Save();
+            _unitOfWork.Category.Delete(categoryObj);
+            _unitOfWork.Save();
 
             TempData["success"] = "Category deleted successfully";
 
