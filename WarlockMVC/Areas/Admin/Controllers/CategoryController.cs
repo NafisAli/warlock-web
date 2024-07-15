@@ -3,8 +3,9 @@ using Warlock.DataAccess.Data;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
 
-namespace WarlockMVC.Controllers
+namespace WarlockMVC.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
