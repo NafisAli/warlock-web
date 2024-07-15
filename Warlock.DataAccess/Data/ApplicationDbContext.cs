@@ -1,7 +1,7 @@
-﻿using WarlockMVC.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Warlock.Models;
 
-namespace WarlockMVC.Data
+namespace Warlock.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {
