@@ -22,6 +22,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.2.0 (2024-07-16)
+
+### New
+
+- Warlock MVC. Implement repository pattern. by @NafisAli
+
+---
+
 ## 1.1.0 (2024-07-15)
 
 ### New
