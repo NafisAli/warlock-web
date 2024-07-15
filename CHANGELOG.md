@@ -22,6 +22,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.0.1 (2024-07-15)
+
+### Change
+
+- Warlock MVC. Update UI for Category. by @NafisAli
+
+---
+
 ## 1.0.0 (2024-07-14)
 
 ### New
