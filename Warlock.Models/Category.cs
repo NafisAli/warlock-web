@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace WarlockMVC.Models
+namespace Warlock.Models
 {
     public class Category
     {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WarlockMVC.Models;
+using Warlock.Models;
 
 namespace WarlockMVC.Controllers
 {

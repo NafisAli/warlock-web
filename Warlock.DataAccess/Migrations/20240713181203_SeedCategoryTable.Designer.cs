@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WarlockMVC.Data;
+using Warlock.DataAccess.Data;
 
 #nullable disable
 
-namespace WarlockMVC.Migrations
+namespace Warlock.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240713181203_SeedCategoryTable")]

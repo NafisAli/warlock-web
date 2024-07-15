@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace WarlockMVC.Migrations
+namespace Warlock.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class ChangeDisplayOrderType : Migration
