@@ -22,18 +22,18 @@ namespace Warlock.Models
         [Required]
         [Display(Name = "List Price")]
         [Range(1, 100)]
-        public required string ListPrice { get; set; }
+        public required double ListPrice { get; set; }
         [Required]
         [Display(Name = "Price for 1-50")]
         [Range(1, 100)]
-        public required string Price { get; set; }
+        public required double Price { get; set; }
         [Required]
         [Display(Name = "Price for 50+")]
         [Range(1, 100)]
-        public required string Price50 { get; set; }
+        public required double Price50 { get; set; }
         [Required]
         [Display(Name = "Price for 100+")]
         [Range(1, 100)]
-        public required string Price100 { get; set; }
+        public required double Price100 { get; set; }
     }
 }
