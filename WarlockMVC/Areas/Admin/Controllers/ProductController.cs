@@ -44,10 +44,10 @@ namespace WarlockMVC.Areas.Admin.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            Product? categoryObj = _unitOfWork.Product.Get(x => x.Id == id);
-            if (categoryObj == null) return NotFound();
+            Product? productObj = _unitOfWork.Product.Get(x => x.Id == id);
+            if (productObj == null) return NotFound();
 
-            return View(categoryObj);
+            return View(productObj);
         }
 
         [HttpPost]
@@ -68,20 +68,20 @@ namespace WarlockMVC.Areas.Admin.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            Product? categoryObj = _unitOfWork.Product.Get(x => x.Id == id);
-            if (categoryObj == null) return NotFound();
+            Product? productObj = _unitOfWork.Product.Get(x => x.Id == id);
+            if (productObj == null) return NotFound();
 
-            return View(categoryObj);
+            return View(productObj);
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Product? categoryObj = _unitOfWork.Product.Get(x => x.Id == id);
+            Product? productObj = _unitOfWork.Product.Get(x => x.Id == id);
 
-            if (categoryObj == null) return NotFound();
+            if (productObj == null) return NotFound();
 
-            _unitOfWork.Product.Delete(categoryObj);
+            _unitOfWork.Product.Delete(productObj);
             _unitOfWork.Save();
 
             TempData["success"] = "Product deleted successfully";
