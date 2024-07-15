@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using WarlockMVC.Data;
+using Warlock.DataAccess.Data;
 
 internal class Program
 {

@@ -1,4 +1,4 @@
-namespace WarlockMVC.Models
+namespace Warlock.Models
 {
     public class ErrorViewModel
     {

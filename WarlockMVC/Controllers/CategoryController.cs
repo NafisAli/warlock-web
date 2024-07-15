@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WarlockMVC.Data;
-using WarlockMVC.Models;
+using Warlock.DataAccess.Data;
+using Warlock.Models;
 
 namespace WarlockMVC.Controllers
 {
