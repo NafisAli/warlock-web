@@ -22,6 +22,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.4.0 (2024-07-29)
+
+### New
+
+- Warlock MVC. Implement Products. by @NafisAli
+
+---
+
 ## 1.3.0 (2024-07-16)
 
 ### New
