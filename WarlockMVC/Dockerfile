@@ -10,6 +10,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["WarlockMVC/WarlockMVC.csproj", "WarlockMVC/"]
+COPY ["Warlock.DataAccess/Warlock.DataAccess.csproj", "Warlock.DataAccess/"]
+COPY ["Warlock.Models/Warlock.Models.csproj", "Warlock.Models/"]
+COPY ["Warlock.Utility/Warlock.Utility.csproj", "Warlock.Utility/"]
 RUN dotnet restore "./WarlockMVC/WarlockMVC.csproj"
 COPY . .
 WORKDIR "/src/WarlockMVC"
