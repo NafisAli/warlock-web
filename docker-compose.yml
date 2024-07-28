@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  warlockmvc:
+    container_name: warlock-web
+    image: ${DOCKER_REGISTRY-}warlockmvc
+    build:
+      context: .
+      dockerfile: WarlockMVC/Dockerfile
+    depends_on:
+      - warlockdb
+    networks:
+      - default
+    ports:
+      - "3000:8080"
+
+  warlockdb:
+    container_name: warlock-db
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      SA_PASSWORD: "1Super#Secret"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1434:1433"
+    networks:
+      - default
+
+networks:
+  default:
+    name: warlock-network
