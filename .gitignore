@@ -364,4 +364,4 @@ FodyWeavers.xsd
 
 # Local Images
 /WarlockMVC/wwwroot/images/product/*.jpg
-/WarlockMVC/wwwroot/images/*.png
+/WarlockMVC/wwwroot/images/product/*.png
