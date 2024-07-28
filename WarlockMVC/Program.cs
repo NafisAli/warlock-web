@@ -12,17 +12,13 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        {
-            if (Environment.GetEnvironmentVariable("APP_MODE") == "https")
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            }
-            else
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DockerConnection"));
-            }
-        });
+        builder.Services.AddDbContext<ApplicationDbContext>(
+            options => options.UseSqlServer(Environment.GetEnvironmentVariable("APP_MODE") == "https"
+                        ? builder.Configuration.GetConnectionString("DefaultConnection")
+                        : builder.Configuration.GetConnectionString("DockerConnection")
+                       )
+        );
+        
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         var app = builder.Build();
@@ -38,7 +34,7 @@ internal class Program
         using (var scope = app.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            
+
             if (db.Database.GetPendingMigrations().Any())
             {
                 db.Database.Migrate();
