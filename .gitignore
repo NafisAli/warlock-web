@@ -361,4 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Local Images
 /WarlockMVC/wwwroot/images/product/*.jpg
+/WarlockMVC/wwwroot/images/*.png
