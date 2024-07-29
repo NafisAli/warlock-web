@@ -70,7 +70,13 @@ namespace WarlockMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Level")
@@ -98,12 +104,15 @@ namespace WarlockMVC.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             Level = 1,
                             ListPrice = 99.0,
@@ -116,6 +125,7 @@ namespace WarlockMVC.Migrations
                         new
                         {
                             Id = 2,
+                            CategoryId = 2,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             Level = 2,
                             ListPrice = 40.0,
@@ -128,6 +138,7 @@ namespace WarlockMVC.Migrations
                         new
                         {
                             Id = 3,
+                            CategoryId = 3,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             Level = 3,
                             ListPrice = 55.0,
@@ -140,6 +151,7 @@ namespace WarlockMVC.Migrations
                         new
                         {
                             Id = 4,
+                            CategoryId = 3,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             Level = 4,
                             ListPrice = 70.0,
@@ -152,6 +164,7 @@ namespace WarlockMVC.Migrations
                         new
                         {
                             Id = 5,
+                            CategoryId = 3,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             Level = 5,
                             ListPrice = 300.0,
@@ -164,6 +177,7 @@ namespace WarlockMVC.Migrations
                         new
                         {
                             Id = 6,
+                            CategoryId = 3,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             Level = 6,
                             ListPrice = 250.0,
@@ -173,6 +187,17 @@ namespace WarlockMVC.Migrations
                             Tier = "Legendary",
                             Title = "Leaves and Wonders"
                         });
+                });
+
+            modelBuilder.Entity("Warlock.Models.Product", b =>
+                {
+                    b.HasOne("Warlock.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }
