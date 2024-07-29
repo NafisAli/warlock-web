@@ -113,32 +113,42 @@ namespace WarlockMVC.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> objProductList = _unitOfWork
+                .Product.GetAll(includeProperties: "Category")
+                .ToList();
+
+            return Json(new { data = objProductList });
+        }
+
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
-                return NotFound();
+            var productToBeDeleted = _unitOfWork.Product.Get(x => x.Id == id);
+            if (productToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
 
-            Product? productObj = _unitOfWork.Product.Get(x => x.Id == id);
-            if (productObj == null)
-                return NotFound();
+            var oldImagePath = Path.Combine(
+                _webHostEnvironment.WebRootPath,
+                productToBeDeleted.ImageUrl.TrimStart('\\')
+            );
 
-            return View(productObj);
-        }
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Product? productObj = _unitOfWork.Product.Get(x => x.Id == id);
-
-            if (productObj == null)
-                return NotFound();
-
-            _unitOfWork.Product.Delete(productObj);
+            _unitOfWork.Product.Delete(productToBeDeleted);
             _unitOfWork.Save();
 
-            TempData["success"] = "Product deleted successfully";
-
-            return RedirectToAction("Index");
+            return Json(new { success = true, message = "Delete successful" });
         }
+
+        #endregion
     }
 }
