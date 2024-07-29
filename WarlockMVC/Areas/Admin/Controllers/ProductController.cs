@@ -125,6 +125,7 @@ namespace WarlockMVC.Areas.Admin.Controllers
             return Json(new { data = objProductList });
         }
 
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
             var productToBeDeleted = _unitOfWork.Product.Get(x => x.Id == id);
@@ -133,14 +134,17 @@ namespace WarlockMVC.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            var oldImagePath = Path.Combine(
-                _webHostEnvironment.WebRootPath,
-                productToBeDeleted.ImageUrl.TrimStart('\\')
-            );
-
-            if (System.IO.File.Exists(oldImagePath))
+            if (!string.IsNullOrEmpty(productToBeDeleted.ImageUrl))
             {
-                System.IO.File.Delete(oldImagePath);
+                var oldImagePath = Path.Combine(
+                    _webHostEnvironment.WebRootPath,
+                    productToBeDeleted.ImageUrl.TrimStart('\\')
+                );
+
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
             }
 
             _unitOfWork.Product.Delete(productToBeDeleted);
