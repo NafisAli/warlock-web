@@ -16,44 +16,21 @@
                 </a>
             </div>
         </div>
-        <table class="table table-bordered table-striped">
+        <table id="tblData" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Description</th>
                     <th>Level</th>
                     <th>Tier</th>
                     <th>List Price</th>
-                    <th>Price</th>
-                    <th>Price (50+)</th>
-                    <th>Price (100+)</th>
                     <th>Category</th>
-
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var obj in Model)
-                {
-                    <tr>
-                        <td>@obj.Title</td>
-                        <td>@obj.Description</td>
-                        <td>@obj.Level</td>
-                        <td>@obj.Tier</td>
-                        <td>@obj.ListPrice</td>
-                        <td>@obj.Price</td>
-                        <td>@obj.Price50</td>
-                        <td>@obj.Price100</td>
-                        <td>@obj.Category.Name</td>
-                        <td>
-                            <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-primary mx-1"><i class="bi bi-pencil"></i> Edit</a>
-                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-1"><i class="bi bi-trash-fill"></i> Delete</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/product.js"></script>
+}
