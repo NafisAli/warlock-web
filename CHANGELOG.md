@@ -22,6 +22,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.6.0 (2024-07-29)
+
+### New
+
+- Warlock MVC. Products. Add API endpoints. by @NafisAli
+- Warlock MVC. Products. Add image upload functionality. by @NafisAli
+- Warlock MVC. Products. Implement DataTable for Index. by @NafisAli
+- Warlock MVC. Products. Implement Sweet Alerts for Delete. by @NafisAli
+
+### Change
+
+- Warlock MVC. Products. Refactor Create and Edit to Upsert. by @NafisAli
+
+---
+
 ## 1.5.0 (2024-07-29)
 
 ### New
