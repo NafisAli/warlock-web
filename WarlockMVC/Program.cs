@@ -25,7 +25,7 @@ internal class Program
                 options.SignIn.RequireConfirmedAccount = true
             )
             .AddEntityFrameworkStores<ApplicationDbContext>();
-
+        builder.Services.AddRazorPages();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         var app = builder.Build();
@@ -53,6 +53,7 @@ internal class Program
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.MapRazorPages();
 
         app.MapControllerRoute(
             name: "default",
