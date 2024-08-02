@@ -22,6 +22,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.7.0 (2024-07-29)
+
+### New
+
+- Warlock MVC. Products. Update homepage with product listing and add product details page. by @NafisAli
+
+---
+
 ## 1.6.0 (2024-07-29)
 
 ### New
