@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Warlock.DataAccess.Data;
@@ -12,13 +13,19 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-        builder.Services.AddDbContext<ApplicationDbContext>(
-            options => options.UseSqlServer(Environment.GetEnvironmentVariable("APP_MODE") == "https"
-                        ? builder.Configuration.GetConnectionString("DefaultConnection")
-                        : builder.Configuration.GetConnectionString("DockerConnection")
-                       )
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(
+                Environment.GetEnvironmentVariable("APP_MODE") == "https"
+                    ? builder.Configuration.GetConnectionString("DefaultConnection")
+                    : builder.Configuration.GetConnectionString("DockerConnection")
+            )
         );
-        
+        builder
+            .Services.AddDefaultIdentity<IdentityUser>(options =>
+                options.SignIn.RequireConfirmedAccount = true
+            )
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         var app = builder.Build();
@@ -43,14 +50,14 @@ internal class Program
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         app.UseRouting();
-
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+            pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"
+        );
 
         app.Run();
     }
