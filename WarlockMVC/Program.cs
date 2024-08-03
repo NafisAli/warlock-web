@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Warlock.DataAccess.Data;
 using Warlock.DataAccess.Repository;
 using Warlock.DataAccess.Repository.IRepository;
+using Warlock.Utility;
 
 internal class Program
 {
@@ -21,10 +23,11 @@ internal class Program
             )
         );
         builder
-            .Services.AddDefaultIdentity<IdentityUser>(options =>
+            .Services.AddIdentity<IdentityUser, IdentityRole>(options =>
                 options.SignIn.RequireConfirmedAccount = true
             )
             .AddEntityFrameworkStores<ApplicationDbContext>();
+        builder.Services.AddScoped<IEmailSender, EmailSender>();
         builder.Services.AddRazorPages();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
