@@ -26,7 +26,8 @@ internal class Program
             .Services.AddIdentity<IdentityUser, IdentityRole>(options =>
                 options.SignIn.RequireConfirmedAccount = true
             )
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
         builder.Services.AddScoped<IEmailSender, EmailSender>();
         builder.Services.AddRazorPages();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
