@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Warlock.DataAccess.Data;
 using Warlock.DataAccess.Repository;
 using Warlock.DataAccess.Repository.IRepository;
+using Warlock.Utility;
 
 internal class Program
 {
@@ -12,13 +15,27 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-        builder.Services.AddDbContext<ApplicationDbContext>(
-            options => options.UseSqlServer(Environment.GetEnvironmentVariable("APP_MODE") == "https"
-                        ? builder.Configuration.GetConnectionString("DefaultConnection")
-                        : builder.Configuration.GetConnectionString("DockerConnection")
-                       )
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(
+                Environment.GetEnvironmentVariable("APP_MODE") == "https"
+                    ? builder.Configuration.GetConnectionString("DefaultConnection")
+                    : builder.Configuration.GetConnectionString("DockerConnection")
+            )
         );
-        
+        builder
+            .Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+                options.SignIn.RequireConfirmedAccount = true
+            )
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+        builder.Services.ConfigureApplicationCookie(options =>
+        {
+            options.LoginPath = $"/Identity/Account/Login";
+            options.LogoutPath = $"/Identity/Account/Logout";
+            options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+        });
+        builder.Services.AddScoped<IEmailSender, EmailSender>();
+        builder.Services.AddRazorPages();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         var app = builder.Build();
@@ -43,14 +60,15 @@ internal class Program
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         app.UseRouting();
-
+        app.UseAuthentication();
         app.UseAuthorization();
+        app.MapRazorPages();
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+            pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"
+        );
 
         app.Run();
     }
