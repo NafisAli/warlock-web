@@ -15,7 +15,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Warlock.Models;
@@ -110,6 +112,11 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
                 ErrorMessage = "The password and confirmation password do not match."
             )]
             public string ConfirmPassword { get; set; }
+
+            public string? Role { get; set; }
+
+            [ValidateNever]
+            public IEnumerable<SelectListItem> RoleList { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -130,6 +137,13 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
                     .GetAwaiter()
                     .GetResult();
             }
+
+            Input = new()
+            {
+                RoleList = _roleManager
+                    .Roles.Select(x => x.Name)
+                    .Select(y => new SelectListItem { Text = y, Value = y })
+            };
 
             ReturnUrl = returnUrl;
             ExternalLogins = (
@@ -153,6 +167,15 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(Input.Role))
+                    {
+                        await _userManager.AddToRoleAsync(user, Input.Role);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.Role_Customer);
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
