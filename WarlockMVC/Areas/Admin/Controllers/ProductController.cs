@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,10 +7,12 @@ using Warlock.DataAccess.Data;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
 using Warlock.Models.ViewModels;
+using Warlock.Utility;
 
 namespace WarlockMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

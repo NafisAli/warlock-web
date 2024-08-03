@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Warlock.DataAccess.Data;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
+using Warlock.Utility;
 
 namespace WarlockMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -30,9 +33,11 @@ namespace WarlockMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString()) ModelState.AddModelError("name", "The Display Order cannot exactly match the name");
+            if (obj.Name == obj.DisplayOrder.ToString())
+                ModelState.AddModelError("name", "The Display Order cannot exactly match the name");
 
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid)
+                return View();
 
             _unitOfWork.Category.Add(obj);
             _unitOfWork.Save();
@@ -44,10 +49,12 @@ namespace WarlockMVC.Areas.Admin.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if (id == null || id == 0) return NotFound();
+            if (id == null || id == 0)
+                return NotFound();
 
             Category? categoryObj = _unitOfWork.Category.Get(x => x.Id == id);
-            if (categoryObj == null) return NotFound();
+            if (categoryObj == null)
+                return NotFound();
 
             return View(categoryObj);
         }
@@ -55,9 +62,11 @@ namespace WarlockMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString()) ModelState.AddModelError("name", "The Display Order cannot exactly match the name");
+            if (obj.Name == obj.DisplayOrder.ToString())
+                ModelState.AddModelError("name", "The Display Order cannot exactly match the name");
 
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid)
+                return View();
 
             _unitOfWork.Category.Update(obj);
             _unitOfWork.Save();
@@ -69,10 +78,12 @@ namespace WarlockMVC.Areas.Admin.Controllers
 
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0) return NotFound();
+            if (id == null || id == 0)
+                return NotFound();
 
             Category? categoryObj = _unitOfWork.Category.Get(x => x.Id == id);
-            if (categoryObj == null) return NotFound();
+            if (categoryObj == null)
+                return NotFound();
 
             return View(categoryObj);
         }
@@ -82,7 +93,8 @@ namespace WarlockMVC.Areas.Admin.Controllers
         {
             Category? categoryObj = _unitOfWork.Category.Get(x => x.Id == id);
 
-            if (categoryObj == null) return NotFound();
+            if (categoryObj == null)
+                return NotFound();
 
             _unitOfWork.Category.Delete(categoryObj);
             _unitOfWork.Save();
