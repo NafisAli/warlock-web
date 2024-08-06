@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using Warlock.Utility;
 namespace WarlockMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Game_Master)]
+    // [Authorize(Roles = SD.Role_Game_Master)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
