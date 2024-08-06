@@ -12,6 +12,7 @@ namespace Warlock.DataAccess.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Faction> Factions { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,7 +41,41 @@ namespace Warlock.DataAccess.Data
                         DisplayOrder = 3
                     }
                 );
-            base.OnModelCreating(modelBuilder);
+
+            modelBuilder
+                .Entity<Faction>()
+                .HasData(
+                    new Faction
+                    {
+                        Id = 1,
+                        Name = "Traders",
+                        StreetAddress = "123 Faction St",
+                        City = "Faction City",
+                        State = "Faction State",
+                        PostCode = "1234",
+                        PhoneNumber = "0123456789"
+                    },
+                    new Faction
+                    {
+                        Id = 2,
+                        Name = "Explorers",
+                        StreetAddress = "123 Faction St",
+                        City = "Faction City",
+                        State = "Faction State",
+                        PostCode = "1234",
+                        PhoneNumber = "0123456789"
+                    },
+                    new Faction
+                    {
+                        Id = 3,
+                        Name = "Mercenaries",
+                        StreetAddress = "123 Faction St",
+                        City = "Faction City",
+                        State = "Faction State",
+                        PostCode = "1234",
+                        PhoneNumber = "0123456789"
+                    }
+                );
 
             modelBuilder
                 .Entity<Product>()
@@ -130,7 +165,6 @@ namespace Warlock.DataAccess.Data
                         CategoryId = 3
                     }
                 );
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warlock.DataAccess.Data;
 
 #nullable disable
 
-namespace WarlockMVC.Migrations
+namespace Warlock.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240806134231_SeedFactionData")]
+    partial class SeedFactionData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -468,9 +471,6 @@ namespace WarlockMVC.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FactionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -483,8 +483,6 @@ namespace WarlockMVC.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("FactionId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -549,15 +547,6 @@ namespace WarlockMVC.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Warlock.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Warlock.Models.Faction", "Faction")
-                        .WithMany()
-                        .HasForeignKey("FactionId");
-
-                    b.Navigation("Faction");
                 });
 #pragma warning restore 612, 618
         }

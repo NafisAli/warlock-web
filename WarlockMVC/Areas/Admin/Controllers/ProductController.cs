@@ -12,7 +12,7 @@ using Warlock.Utility;
 namespace WarlockMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+    // [Authorize(Roles = SD.Role_Game_Master)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -56,7 +56,18 @@ namespace WarlockMVC.Areas.Admin.Controllers
             if (id == null || id == 0)
                 return View(productVM);
 
-            productVM.Product = _unitOfWork.Product.Get(x => x.Id == id);
+            productVM.Product =
+                _unitOfWork.Product.Get(x => x.Id == id)
+                ?? new Product
+                {
+                    Title = "",
+                    Level = 0,
+                    ListPrice = 0,
+                    Price = 0,
+                    Price50 = 0,
+                    Price100 = 0,
+                    Tier = ""
+                };
 
             return View(productVM);
         }
