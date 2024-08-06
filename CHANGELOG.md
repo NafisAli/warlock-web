@@ -10,23 +10,36 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- TBA. Link to any Pull Requests, Issues, Basecamp links, tickets etc. Please tag with your GitHub username. `@GitHubUsername`
-- Warlock Model. Add `Faction` model. by @NafisAli
-- Warlock DataAccess. Add `Faction` model to DbContext, Add seed data. by @NafisAli
-- Warlock MVC. Create `Faction` CRUD. by @NafisAli
+- TBA.
 
 ### Change
 
-- TBA. Link to any Pull Requests, Issues, Basecamp links, tickets etc. Please tag with your GitHub username. `@GitHubUsername`
-- Warlock. Update role names. by @NafisAli
-- Warlock MVC. Disable role based access. by @NafisAli
-- Warlock MVC. Add faction support to user registration. by @NafisAli
+- TBA.
 
 ### Fix
 
-- TBA. Link to any Pull Requests, Issues, Basecamp links, tickets etc. Please tag with your GitHub username. `@GitHubUsername`
-- Warlock MVC. Product. Fix URL parameter in product edit button. by @NafisAli
-- Warlock MVC. Fix null reference warning in product controller. by @NafisAli
+- TBA.
+
+---
+
+## 1.9.0 (2024-08-07)
+
+### New
+
+- Warlock Model. Add `Faction` model.
+- Warlock DataAccess. Add `Faction` model to DbContext, Add seed data.
+- Warlock MVC. Create `Faction` CRUD.
+
+### Change
+
+- Warlock. Update role names.
+- Warlock MVC. Disable role based access.
+- Warlock MVC. Add faction support to user registration.
+
+### Fix
+
+- Warlock MVC. Product. Fix URL parameter in product edit button.
+- Warlock MVC. Fix null reference warning in product controller.
 
 ---
 
@@ -34,7 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Add Identity based login management. by @NafisAli
+- Warlock MVC. Add Identity based login management.
 
 ---
 
@@ -42,7 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Products. Update homepage with product listing and add product details page. by @NafisAli
+- Warlock MVC. Products. Update homepage with product listing and add product details page.
 
 ---
 
@@ -50,14 +63,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Products. Add API endpoints. by @NafisAli
-- Warlock MVC. Products. Add image upload functionality. by @NafisAli
-- Warlock MVC. Products. Implement DataTable for Index. by @NafisAli
-- Warlock MVC. Products. Implement Sweet Alerts for Delete. by @NafisAli
+- Warlock MVC. Products. Add API endpoints.
+- Warlock MVC. Products. Add image upload functionality.
+- Warlock MVC. Products. Implement DataTable for Index.
+- Warlock MVC. Products. Implement Sweet Alerts for Delete.
 
 ### Change
 
-- Warlock MVC. Products. Refactor Create and Edit to Upsert. by @NafisAli
+- Warlock MVC. Products. Refactor Create and Edit to Upsert.
 
 ---
 
@@ -65,7 +78,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Containerize the project. by @NafisAli
+- Warlock MVC. Containerize the project.
 
 ---
 
@@ -73,7 +86,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Implement Products. by @NafisAli
+- Warlock MVC. Implement Products.
 
 ---
 
@@ -81,8 +94,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Implement Areas. by @NafisAli
-- Warlock MVC. Add dropdown menu to navigation. by @NafisAli
+- Warlock MVC. Implement Areas.
+- Warlock MVC. Add dropdown menu to navigation.
 
 ---
 
@@ -90,7 +103,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Implement repository pattern. by @NafisAli
+- Warlock MVC. Implement repository pattern.
 
 ---
 
@@ -98,7 +111,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Implement n-tier architecture. by @NafisAli
+- Warlock MVC. Implement n-tier architecture.
 
 ---
 
@@ -106,7 +119,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Change
 
-- Warlock MVC. Update UI for Category. by @NafisAli
+- Warlock MVC. Update UI for Category.
 
 ---
 
@@ -114,7 +127,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### New
 
-- Warlock MVC. Base project. by @NafisAli
-- Warlock MVC Razor. Base razor pages project. by @NafisAli
+- Warlock MVC. Base project.
+- Warlock MVC Razor. Base razor pages project.
 
 ---
