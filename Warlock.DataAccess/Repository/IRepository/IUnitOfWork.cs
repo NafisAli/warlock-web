@@ -10,6 +10,7 @@ namespace Warlock.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
+        IFactionRepository Faction { get; }
 
         void Save();
     }
