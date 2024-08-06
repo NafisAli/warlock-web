@@ -8,7 +8,7 @@ using Warlock.Utility;
 namespace WarlockMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+    [Authorize(Roles = SD.Role_Game_Master)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

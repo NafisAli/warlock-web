@@ -129,19 +129,19 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
+            if (!_roleManager.RoleExistsAsync(SD.Role_Player).GetAwaiter().GetResult())
             {
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
                 _roleManager
-                    .CreateAsync(new IdentityRole(SD.Role_Customer))
+                    .CreateAsync(new IdentityRole(SD.Role_Game_Master))
+                    .GetAwaiter()
+                    .GetResult();
+                _roleManager.CreateAsync(new IdentityRole(SD.Role_Player)).GetAwaiter().GetResult();
+                _roleManager
+                    .CreateAsync(new IdentityRole(SD.Role_Officer))
                     .GetAwaiter()
                     .GetResult();
                 _roleManager
-                    .CreateAsync(new IdentityRole(SD.Role_Employee))
-                    .GetAwaiter()
-                    .GetResult();
-                _roleManager
-                    .CreateAsync(new IdentityRole(SD.Role_Company))
+                    .CreateAsync(new IdentityRole(SD.Role_Faction))
                     .GetAwaiter()
                     .GetResult();
             }
@@ -187,7 +187,7 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.Role_Customer);
+                        await _userManager.AddToRoleAsync(user, SD.Role_Player);
                     }
 
                     _logger.LogInformation("User created a new account with password.");

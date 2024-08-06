@@ -8,9 +8,9 @@ namespace Warlock.Utility
 {
     public static class SD
     {
-        public const string Role_Customer = "Customer";
-        public const string Role_Company = "Company";
-        public const string Role_Admin = "Admin";
-        public const string Role_Employee = "Employee";
+        public const string Role_Player = "Player";
+        public const string Role_Faction = "Faction";
+        public const string Role_Game_Master = "GM";
+        public const string Role_Officer = "Officer";
     }
 }
