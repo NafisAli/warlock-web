@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
 using Warlock.Utility;
 
@@ -34,6 +35,7 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -41,7 +43,8 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender
+            IEmailSender emailSender,
+            IUnitOfWork unitOfWork
         )
         {
             _roleManager = roleManager;
@@ -51,6 +54,7 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -118,6 +122,11 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
 
+            public int? FactionId { get; set; }
+
+            [ValidateNever]
+            public IEnumerable<SelectListItem> FactionList { get; set; }
+
             [Required]
             public string Name { get; set; }
             public string? StreetAddress { get; set; }
@@ -150,7 +159,10 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
             {
                 RoleList = _roleManager
                     .Roles.Select(x => x.Name)
-                    .Select(y => new SelectListItem { Text = y, Value = y })
+                    .Select(y => new SelectListItem { Text = y, Value = y }),
+                FactionList = _unitOfWork
+                    .Faction.GetAll()
+                    .Select(y => new SelectListItem { Text = y.Name, Value = y.Id.ToString() })
             };
 
             ReturnUrl = returnUrl;
@@ -177,6 +189,12 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
                 user.State = Input.State;
                 user.PostCode = Input.PostCode;
                 user.PhoneNumber = Input.PhoneNumber;
+
+                if (Input.Role == SD.Role_Faction)
+                {
+                    user.FactionId = Input.FactionId;
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
