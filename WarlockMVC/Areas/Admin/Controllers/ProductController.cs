@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,7 +56,18 @@ namespace WarlockMVC.Areas.Admin.Controllers
             if (id == null || id == 0)
                 return View(productVM);
 
-            productVM.Product = _unitOfWork.Product.Get(x => x.Id == id);
+            productVM.Product =
+                _unitOfWork.Product.Get(x => x.Id == id)
+                ?? new Product
+                {
+                    Title = "",
+                    Level = 0,
+                    ListPrice = 0,
+                    Price = 0,
+                    Price50 = 0,
+                    Price100 = 0,
+                    Tier = ""
+                };
 
             return View(productVM);
         }
