@@ -11,15 +11,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### New
 
 - TBA. Link to any Pull Requests, Issues, Basecamp links, tickets etc. Please tag with your GitHub username. `@GitHubUsername`
+- Warlock Model. Add `Faction` model. by @NafisAli
+- Warlock DataAccess. Add `Faction` model to DbContext, Add seed data. by @NafisAli
+- Warlock MVC. Create `Faction` CRUD. by @NafisAli
 
 ### Change
 
 - TBA. Link to any Pull Requests, Issues, Basecamp links, tickets etc. Please tag with your GitHub username. `@GitHubUsername`
-- Warlock MVC. Update role names. by @NafisAli
+- Warlock. Update role names. by @NafisAli
+- Warlock MVC. Disable role based access. by @NafisAli
 
 ### Fix
 
 - TBA. Link to any Pull Requests, Issues, Basecamp links, tickets etc. Please tag with your GitHub username. `@GitHubUsername`
+- Warlock MVC. Product. Fix URL parameter in product edit button. by @NafisAli
+- Warlock MVC. Fix null reference warning in product controller. by @NafisAli
 
 ---
 
