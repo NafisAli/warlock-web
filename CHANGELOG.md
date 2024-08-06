@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - TBA. Link to any Pull Requests, Issues, Basecamp links, tickets etc. Please tag with your GitHub username. `@GitHubUsername`
 - Warlock. Update role names. by @NafisAli
 - Warlock MVC. Disable role based access. by @NafisAli
+- Warlock MVC. Add faction support to user registration. by @NafisAli
 
 ### Fix
 
