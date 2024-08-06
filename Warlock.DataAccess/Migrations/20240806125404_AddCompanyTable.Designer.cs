@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warlock.DataAccess.Data;
 
 #nullable disable
 
-namespace WarlockMVC.Migrations
+namespace Warlock.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240806125404_AddCompanyTable")]
+    partial class AddCompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,38 +303,6 @@ namespace WarlockMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Factions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Faction City",
-                            Name = "Traders",
-                            PhoneNumber = "0123456789",
-                            PostCode = "1234",
-                            State = "Faction State",
-                            StreetAddress = "123 Faction St"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Faction City",
-                            Name = "Explorers",
-                            PhoneNumber = "0123456789",
-                            PostCode = "1234",
-                            State = "Faction State",
-                            StreetAddress = "123 Faction St"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Faction City",
-                            Name = "Mercenaries",
-                            PhoneNumber = "0123456789",
-                            PostCode = "1234",
-                            State = "Faction State",
-                            StreetAddress = "123 Faction St"
-                        });
                 });
 
             modelBuilder.Entity("Warlock.Models.Product", b =>
@@ -468,9 +439,6 @@ namespace WarlockMVC.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FactionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -483,8 +451,6 @@ namespace WarlockMVC.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("FactionId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -549,15 +515,6 @@ namespace WarlockMVC.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Warlock.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Warlock.Models.Faction", "Faction")
-                        .WithMany()
-                        .HasForeignKey("FactionId");
-
-                    b.Navigation("Faction");
                 });
 #pragma warning restore 612, 618
         }
