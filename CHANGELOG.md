@@ -22,6 +22,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.10.0 (2024-08-09)
+
+### New
+
+- Warlock Model. Add `ShoppingCart` model.
+- Warlock DataAccess. Add `ShoppingCart` model to DbContext.
+- Warlock MVC. Implement cart functionality.
+
+### Change
+
+- Warlock DataAccess. Update repository methods to configure tracking.
+- Warlock MVC. Update product details page to use `ShoppingCart` model.
+
+### Fix
+
+- Warlock MVC. Fix Razor runtime compilation.
+
+---
+
 ## 1.9.0 (2024-08-07)
 
 ### New
