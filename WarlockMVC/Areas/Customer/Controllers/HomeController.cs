@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
@@ -28,12 +30,47 @@ namespace WarlockMVC.Areas.Customer.Controllers
 
         public IActionResult Details(int productId)
         {
-            Product product = _unitOfWork.Product.Get(
-                x => x.Id == productId,
-                includeProperties: "Category"
+            ShoppingCart shoppingCart =
+                new()
+                {
+                    Product = _unitOfWork.Product.Get(
+                        x => x.Id == productId,
+                        includeProperties: "Category"
+                    ),
+                    Count = 1,
+                    ProductId = productId
+                };
+
+            return View(shoppingCart);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = userId;
+
+            ShoppingCart cartFromDatabase = _unitOfWork.ShoppingCart.Get(x =>
+                x.Id == shoppingCart.Id && x.ApplicationUserId == userId
             );
 
-            return View(product);
+            if (cartFromDatabase != null)
+            {
+                cartFromDatabase.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCart.Update(cartFromDatabase);
+            }
+            else
+            {
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+            }
+
+            TempData["success"] = "Cart updated successfully";
+
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Warlock.DataAccess.Data;
 using Warlock.DataAccess.Repository.IRepository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Warlock.DataAccess.Repository
 {
@@ -22,9 +23,13 @@ namespace Warlock.DataAccess.Repository
             this.dbSet = _db.Set<T>();
         }
 
-        public T? Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T? Get(
+            Expression<Func<T, bool>> filter,
+            string? includeProperties = null,
+            bool tracked = false
+        )
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query = tracked ? dbSet : dbSet.AsNoTracking();
             query = query.Where(filter);
 
             if (!string.IsNullOrEmpty(includeProperties))
@@ -43,9 +48,17 @@ namespace Warlock.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(
+            Expression<Func<T, bool>>? filter,
+            string? includeProperties = null
+        )
         {
             IQueryable<T> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (
