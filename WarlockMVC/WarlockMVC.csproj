@@ -10,8 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Customer\Views\Cart\Summary.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
@@ -28,6 +33,18 @@
     <ProjectReference Include="..\Warlock.DataAccess\Warlock.DataAccess.csproj" />
     <ProjectReference Include="..\Warlock.Models\Warlock.Models.csproj" />
     <ProjectReference Include="..\Warlock.Utility\Warlock.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Customer\Views\Cart\Summary.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Customer\Views\Cart\Summary.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Customer\Views\Cart\Summary.cshtml" />
   </ItemGroup>
 
 </Project>
