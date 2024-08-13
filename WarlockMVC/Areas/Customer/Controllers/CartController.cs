@@ -1,7 +1,8 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mono.TextTemplating;
+using Stripe.Checkout;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
 using Warlock.Models.ViewModels;
@@ -181,7 +182,50 @@ namespace WarlockMVC.Areas.Customer.Controllers
 
             if (applicationUser.FactionId.GetValueOrDefault() == 0)
             {
-                // payment logic
+                var domain = "https://localhost:7164/";
+
+                var options = new SessionCreateOptions
+                {
+                    SuccessUrl =
+                        domain
+                        + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
+                    CancelUrl = domain + "customer/cart/index",
+                    LineItems = new List<SessionLineItemOptions>(),
+                    Mode = "payment",
+                };
+
+                foreach (var item in ShoppingCartVM.ShoppingCartList)
+                {
+                    var SessionLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.Price * 100),
+                            Currency = "aud",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Product.Title
+                            }
+                        },
+                        Quantity = item.Count
+                    };
+
+                    options.LineItems.Add(SessionLineItem);
+                }
+
+                var service = new SessionService();
+                Session session = service.Create(options);
+
+                _unitOfWork.OrderHeader.UpdateStripePaymentID(
+                    ShoppingCartVM.OrderHeader.Id,
+                    session.Id,
+                    session.PaymentIntentId
+                );
+                _unitOfWork.Save();
+
+                Response.Headers.Append("Location", session.Url);
+
+                return new StatusCodeResult(303);
             }
 
             return RedirectToAction(
