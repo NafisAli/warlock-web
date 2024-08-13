@@ -1,4 +1,4 @@
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mono.TextTemplating;
@@ -236,6 +236,38 @@ namespace WarlockMVC.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(
+                x => x.Id == id,
+                includeProperties: "ApplicationUser"
+            );
+
+            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                if (session.PaymentStatus == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentID(
+                        id,
+                        session.Id,
+                        session.PaymentIntentId
+                    );
+                    _unitOfWork.OrderHeader.UpdateStatus(
+                        id,
+                        SD.StatusApproved,
+                        SD.PaymentStatusApproved
+                    );
+                    _unitOfWork.Save();
+                }
+            }
+
+            List<ShoppingCart> shoppingCarts = _unitOfWork
+                .ShoppingCart.GetAll(x => x.ApplicationUserId == orderHeader.ApplicationUserId)
+                .ToList();
+
+            _unitOfWork.ShoppingCart.DeleteRange(shoppingCarts);
+
             return View(id);
         }
 
