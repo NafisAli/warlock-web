@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Mono.TextTemplating;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
 using Warlock.Models.ViewModels;
@@ -29,13 +30,22 @@ namespace WarlockMVC.Areas.Customer.Controllers
                 ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(
                     x => x.ApplicationUserId == userId,
                     includeProperties: "Product"
-                )
+                ),
+                OrderHeader = new()
+                {
+                    City = "",
+                    State = "",
+                    Name = "",
+                    PhoneNumber = "",
+                    PostCode = "",
+                    StreetAddress = ""
+                }
             };
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 cart.Price = GetPriceBasedOnQuantity(cart);
-                ShoppingCartVM.OrderTotal += (cart.Count * (double)cart.Price);
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Count * (double)cart.Price);
             }
 
             return View(ShoppingCartVM);
@@ -84,7 +94,35 @@ namespace WarlockMVC.Areas.Customer.Controllers
 
         public IActionResult Summary()
         {
-            return View();
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var applicationUser = _unitOfWork.ApplicationUser.Get(x => x.Id == userId);
+
+            ShoppingCartVM = new()
+            {
+                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(
+                    x => x.ApplicationUserId == userId,
+                    includeProperties: "Product"
+                ),
+                OrderHeader = new()
+                {
+                    ApplicationUser = applicationUser,
+                    Name = applicationUser.Name,
+                    StreetAddress = applicationUser.StreetAddress,
+                    City = applicationUser.City,
+                    State = applicationUser.State,
+                    PostCode = applicationUser.PostCode,
+                    PhoneNumber = applicationUser.PhoneNumber
+                }
+            };
+
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            {
+                cart.Price = GetPriceBasedOnQuantity(cart);
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Count * (double)cart.Price);
+            }
+
+            return View(ShoppingCartVM);
         }
 
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
