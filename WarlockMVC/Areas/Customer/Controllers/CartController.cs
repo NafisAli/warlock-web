@@ -5,6 +5,7 @@ using Mono.TextTemplating;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
 using Warlock.Models.ViewModels;
+using Warlock.Utility;
 
 namespace WarlockMVC.Areas.Customer.Controllers
 {
@@ -13,6 +14,8 @@ namespace WarlockMVC.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+
+        [BindProperty]
         public ShoppingCartVM ShoppingCartVM { get; set; }
 
         public CartController(IUnitOfWork unitOfWork)
@@ -123,6 +126,73 @@ namespace WarlockMVC.Areas.Customer.Controllers
             }
 
             return View(ShoppingCartVM);
+        }
+
+        [HttpPost]
+        [ActionName("Summary")]
+        public IActionResult SummaryPOST()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(x => x.Id == userId);
+
+            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(
+                x => x.ApplicationUserId == userId,
+                includeProperties: "Product"
+            );
+
+            ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
+            ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
+
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            {
+                cart.Price = GetPriceBasedOnQuantity(cart);
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Count * (double)cart.Price);
+            }
+
+            if (applicationUser.FactionId.GetValueOrDefault() == 0)
+            {
+                ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
+                ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
+            }
+            else
+            {
+                ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
+                ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
+            }
+
+            _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
+            _unitOfWork.Save();
+
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            {
+                OrderDetail orderDetail =
+                    new()
+                    {
+                        ProductId = cart.ProductId,
+                        OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
+                        Price = cart.Price,
+                        Count = cart.Count,
+                    };
+
+                _unitOfWork.OrderDetail.Add(orderDetail);
+                _unitOfWork.Save();
+            }
+
+            if (applicationUser.FactionId.GetValueOrDefault() == 0)
+            {
+                // payment logic
+            }
+
+            return RedirectToAction(
+                nameof(OrderConfirmation),
+                new { id = ShoppingCartVM.OrderHeader.Id }
+            );
+        }
+
+        public IActionResult OrderConfirmation(int id)
+        {
+            return View(id);
         }
 
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
