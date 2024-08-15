@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Stripe;
 using Warlock.DataAccess.Data;
 using Warlock.DataAccess.Repository;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Utility;
+using static System.Formats.Asn1.AsnWriter;
 
 internal class Program
 {
@@ -22,6 +24,7 @@ internal class Program
                     : builder.Configuration.GetConnectionString("DockerConnection")
             )
         );
+        builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
         builder
             .Services.AddIdentity<IdentityUser, IdentityRole>(options =>
                 options.SignIn.RequireConfirmedAccount = true
@@ -60,6 +63,11 @@ internal class Program
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+
+        var stripeConfig = app.Configuration.GetSection("Stripe").Get<StripeSettings>();
+
+        StripeConfiguration.ApiKey = stripeConfig.SecretKey;
+
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
