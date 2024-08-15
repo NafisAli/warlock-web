@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
     <Content Remove="Areas\Customer\Views\Cart\Summary.cshtml" />
   </ItemGroup>
 
@@ -41,11 +42,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Customer\Views\Cart\Summary.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
     <None Include="Areas\Customer\Views\Cart\Summary.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
   </ItemGroup>
 
 </Project>
