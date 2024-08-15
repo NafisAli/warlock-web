@@ -22,6 +22,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.11.0 (2024-08-16)
+
+### New
+
+- Warlock MVC. Implement order management functionality.
+
+---
+
 ## 1.10.0 (2024-08-09)
 
 ### New
