@@ -22,6 +22,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.13.0 (2024-08-17)
+
+### New
+
+- Warlock DataAccess. Create DbInitializer.
+
+### Change
+
+- Warlock MVC. Update program to use DbInitializer.
+
+---
+
 ## 1.12.0 (2024-08-17)
 
 ### New
