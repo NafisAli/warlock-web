@@ -69,11 +69,20 @@ namespace WarlockMVC.Areas.Customer.Controllers
 
         public IActionResult Minus(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(x => x.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(x => x.Id == cartId, tracked: true);
 
             if (cartFromDb.Count <= 1)
             {
                 _unitOfWork.ShoppingCart.Delete(cartFromDb);
+
+                HttpContext.Session.SetInt32(
+                    SD.SessionCart,
+                    _unitOfWork
+                        .ShoppingCart.GetAll(x =>
+                            x.ApplicationUserId == cartFromDb.ApplicationUserId
+                        )
+                        .Count() - 1
+                );
             }
             else
             {
@@ -88,7 +97,14 @@ namespace WarlockMVC.Areas.Customer.Controllers
 
         public IActionResult Delete(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(x => x.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(x => x.Id == cartId, tracked: true);
+
+            HttpContext.Session.SetInt32(
+                SD.SessionCart,
+                _unitOfWork
+                    .ShoppingCart.GetAll(x => x.ApplicationUserId == cartFromDb.ApplicationUserId)
+                    .Count() - 1
+            );
 
             _unitOfWork.ShoppingCart.Delete(cartFromDb);
             _unitOfWork.Save();
