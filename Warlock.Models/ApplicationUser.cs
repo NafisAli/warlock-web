@@ -24,5 +24,8 @@ namespace Warlock.Models
         [ForeignKey("FactionId")]
         [ValidateNever]
         public Faction? Faction { get; set; }
+
+        [NotMapped]
+        public string? Role { get; set; }
     }
 }

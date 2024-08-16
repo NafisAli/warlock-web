@@ -22,6 +22,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.14.0 (2024-08-17)
+
+### New
+
+- Warlock MVC. Add user management functionality.
+
+---
+
 ## 1.13.1 (2024-08-17)
 
 ### Fix
