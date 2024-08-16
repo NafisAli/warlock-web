@@ -12,7 +12,7 @@ using Warlock.Utility;
 namespace WarlockMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    // [Authorize(Roles = SD.Role_Game_Master)]
+    [Authorize(Roles = SD.Role_Game_Master)]
     public class FactionController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
