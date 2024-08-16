@@ -22,6 +22,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.13.1 (2024-08-17)
+
+### Fix
+
+- Warlock MVC. Refactor hardcoded doamin to dynamic request based value.
+
+---
+
 ## 1.13.0 (2024-08-17)
 
 ### New
