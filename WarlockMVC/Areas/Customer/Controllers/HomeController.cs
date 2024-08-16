@@ -22,6 +22,18 @@ namespace WarlockMVC.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (claim != null)
+            {
+                int count = _unitOfWork
+                    .ShoppingCart.GetAll(x => x.ApplicationUserId == claim.Value)
+                    .Count();
+
+                HttpContext.Session.SetInt32(SD.SessionCart, count);
+            }
+
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(
                 includeProperties: "Category"
             );
@@ -61,19 +73,20 @@ namespace WarlockMVC.Areas.Customer.Controllers
             {
                 cartFromDatabase.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDatabase);
+                _unitOfWork.Save();
             }
             else
             {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                _unitOfWork.Save();
+
                 HttpContext.Session.SetInt32(
                     SD.SessionCart,
-                    _unitOfWork.ShoppingCart.Get(x => x.ApplicationUserId == userId).Count
+                    _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count()
                 );
             }
 
             TempData["success"] = "Cart updated successfully";
-
-            _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
         }
