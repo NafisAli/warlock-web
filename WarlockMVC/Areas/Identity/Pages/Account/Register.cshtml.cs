@@ -138,23 +138,6 @@ namespace WarlockMVC.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!_roleManager.RoleExistsAsync(SD.Role_Player).GetAwaiter().GetResult())
-            {
-                _roleManager
-                    .CreateAsync(new IdentityRole(SD.Role_Game_Master))
-                    .GetAwaiter()
-                    .GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Player)).GetAwaiter().GetResult();
-                _roleManager
-                    .CreateAsync(new IdentityRole(SD.Role_Officer))
-                    .GetAwaiter()
-                    .GetResult();
-                _roleManager
-                    .CreateAsync(new IdentityRole(SD.Role_Faction))
-                    .GetAwaiter()
-                    .GetResult();
-            }
-
             Input = new()
             {
                 RoleList = _roleManager
