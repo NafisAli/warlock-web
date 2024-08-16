@@ -62,7 +62,7 @@ namespace WarlockMVC.Areas.Admin.Controllers
                 includeProperties: "Product"
             );
 
-            var domain = "https://localhost:7164/";
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
 
             var options = new SessionCreateOptions
             {
