@@ -22,18 +22,6 @@ namespace WarlockMVC.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-
-            if (claim != null)
-            {
-                int count = _unitOfWork
-                    .ShoppingCart.GetAll(x => x.ApplicationUserId == claim.Value)
-                    .Count();
-
-                HttpContext.Session.SetInt32(SD.SessionCart, count);
-            }
-
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(
                 includeProperties: "Category"
             );
