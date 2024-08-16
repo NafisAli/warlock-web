@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
+using Warlock.Utility;
 
 namespace WarlockMVC.Areas.Customer.Controllers
 {
@@ -64,6 +65,10 @@ namespace WarlockMVC.Areas.Customer.Controllers
             else
             {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                HttpContext.Session.SetInt32(
+                    SD.SessionCart,
+                    _unitOfWork.ShoppingCart.Get(x => x.ApplicationUserId == userId).Count
+                );
             }
 
             TempData["success"] = "Cart updated successfully";
