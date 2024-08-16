@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Stripe;
 using Warlock.DataAccess.Data;
+using Warlock.DataAccess.DbInitializer;
 using Warlock.DataAccess.Repository;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Utility;
@@ -53,6 +54,7 @@ internal class Program
             options.Cookie.IsEssential = true;
         });
 
+        builder.Services.AddScoped<IDbInitializer, DbInitializer>();
         builder.Services.AddScoped<IEmailSender, EmailSender>();
         builder.Services.AddRazorPages();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -69,12 +71,9 @@ internal class Program
 
         using (var scope = app.Services.CreateScope())
         {
-            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
 
-            if (db.Database.GetPendingMigrations().Any())
-            {
-                db.Database.Migrate();
-            }
+            dbInitializer.Initialize();
         }
 
         app.UseHttpsRedirection();
