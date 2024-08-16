@@ -22,6 +22,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ---
 
+## 1.12.0 (2024-08-17)
+
+### New
+
+- Warlock MVC. Add product counter to cart icon using session.
+- Warlock MVC. Add Facebook login.
+- Warlock MVC. Add `Create User` page for admin.
+
+### Change
+
+- Warlock MVC. Restore authorized access.
+- Warlock MVC. Update packages.
+
+---
+
 ## 1.11.0 (2024-08-16)
 
 ### New
