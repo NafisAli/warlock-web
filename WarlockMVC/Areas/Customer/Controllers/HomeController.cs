@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Warlock.DataAccess.Repository.IRepository;
 using Warlock.Models;
+using Warlock.Utility;
 
 namespace WarlockMVC.Areas.Customer.Controllers
 {
@@ -60,15 +61,20 @@ namespace WarlockMVC.Areas.Customer.Controllers
             {
                 cartFromDatabase.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDatabase);
+                _unitOfWork.Save();
             }
             else
             {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                _unitOfWork.Save();
+
+                HttpContext.Session.SetInt32(
+                    SD.SessionCart,
+                    _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count()
+                );
             }
 
             TempData["success"] = "Cart updated successfully";
-
-            _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
         }

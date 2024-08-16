@@ -37,6 +37,22 @@ internal class Program
             options.LogoutPath = $"/Identity/Account/Logout";
             options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
         });
+        builder
+            .Services.AddAuthentication()
+            .AddFacebook(options =>
+            {
+                options.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+                options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+            });
+
+        builder.Services.AddDistributedMemoryCache();
+        builder.Services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(100);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
+
         builder.Services.AddScoped<IEmailSender, EmailSender>();
         builder.Services.AddRazorPages();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -71,6 +87,7 @@ internal class Program
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseSession();
         app.MapRazorPages();
 
         app.MapControllerRoute(
